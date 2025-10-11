@@ -61,7 +61,7 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
 
 A documentação da API pode ser acessada por meio do Swagger. Após iniciar o backend, você pode acessar a documentação por meio da seguinte URL:
 
-[/swagger-ui/index.html](http://localhost:44388//swagger-ui/index.html)
+[/swagger/index.html](http://localhost:44388//swagger/index.html)
 
 ## Endpoints
 
