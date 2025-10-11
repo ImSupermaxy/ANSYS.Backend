@@ -40,7 +40,7 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
 
    Edite o arquivo [appsettings.Development.json](ANSYS.API/appsettings.Development.json) na sessão "ConnectionStrings" com as configurações do seu banco de dados (Mysql ou Postgress).
 
-   Edite também a sua escolha no arquivo [DependencyInjection.cs](ANSYS.Infrastructure/DependencyInjection.cs) descomentando o banco de dados a sua preferência dentro do método de "AddPersistence".
+   Edite também a sua escolha no arquivo [DependencyInjection.cs](ANSYS.API/Dependency/DependencyInjection.cs) descomente o banco de dados a sua preferência dentro do método de "AddPersistence".
 
 4. **Compile e execute o projeto:**
 
@@ -49,8 +49,7 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
     ou
     Clique com o botão direito do mouse na solução do projeto ("Solution 'ANSYS.Backend'"), a direita. 
     A solução está dentro do menu "Solution Explorer", caso não veja o menu vá em "View" no menu acima, e selecione a opção "Solution Explorer" ou aperte "Ctrl + alt + l"
-
-   A API estará disponível em `http://localhost:7064`.
+    A API estará disponível em `http://localhost:7064`.
 
 5. **Instale as dependências do projeto**
 
