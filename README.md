@@ -27,13 +27,13 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
 1. **Clone o repositório:**
 
    ```bash
-   git clone https://link-do-repo.git
+   git clone https://github.com/ImSupermaxy/ANSYS.Backend.git
    ```
 
 2. **Navegue até o diretório do projeto:**
 
    ```bash
-   cd diretorio-do-projeto
+   cd ANSYS.Backend
    ```
 
 3. **Configure o banco de dados:**
