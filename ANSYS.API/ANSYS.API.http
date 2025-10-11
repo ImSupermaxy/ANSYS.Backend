@@ -1,0 +1,6 @@
+@ANSYS.API_HostAddress = http://localhost:5112
+
+GET {{ANSYS.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
