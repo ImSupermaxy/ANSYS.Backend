@@ -49,6 +49,7 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
     ou
     Clique com o botão direito do mouse na solução do projeto ("Solution 'ANSYS.Backend'"), a direita. 
     A solução está dentro do menu "Solution Explorer", caso não veja o menu vá em "View" no menu acima, e selecione a opção "Solution Explorer" ou aperte "Ctrl + alt + l"
+    
     A API estará disponível em `http://localhost:7064`.
 
 5. **Instale as dependências do projeto**
@@ -60,7 +61,7 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
 
 A documentação da API pode ser acessada por meio do Swagger. Após iniciar o backend, você pode acessar a documentação por meio da seguinte URL:
 
-[/swagger-ui/index.html](http://localhost:8080//swagger-ui/index.html)
+[/swagger-ui/index.html](http://localhost:44388//swagger-ui/index.html)
 
 ## Endpoints
 
