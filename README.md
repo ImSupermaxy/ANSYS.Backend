@@ -69,7 +69,7 @@ Abaixo está a descrição dos principais endpoints da API:
 
 {Alterar os endpoints conforme os endpoints do projeto}
 
-### **1. GET /api/usuarios**
+### **1. GET /api/v1/usuario**
 
 - **Descrição:** Retorna uma lista de usuários.
 - **Parâmetros de Consulta:**
@@ -88,7 +88,7 @@ Abaixo está a descrição dos principais endpoints da API:
     ]
     ```
 
-### **2. POST /api/usuarios**
+### **2. POST /api/v1/usuario**
 
 - **Descrição:** Cria um novo usuário.
 - **Corpo da Requisição:**
@@ -108,7 +108,7 @@ Abaixo está a descrição dos principais endpoints da API:
     }
     ```
 
-### **3. GET /api/usuarios/{id}**
+### **3. GET /api/v1/usuario/{id}**
 
 - **Descrição:** Retorna um usuário específico pelo ID.
 - **Parâmetros de Caminho:**
@@ -124,7 +124,7 @@ Abaixo está a descrição dos principais endpoints da API:
     ```
   - **404 Not Found** (se o usuário não for encontrado)
 
-### **4. PUT /api/usuarios/{id}**
+### **4. PUT /api/v1/usuario/{id}**
 
 - **Descrição:** Atualiza um usuário existente.
 - **Corpo da Requisição:**
@@ -147,7 +147,7 @@ Abaixo está a descrição dos principais endpoints da API:
     ```
   - **404 Not Found** (se o usuário não for encontrado)
 
-### **5. DELETE /api/usuarios/{id}**
+### **5. DELETE /api/v1/usuario/{id}**
 
 - **Descrição:** Remove um usuário pelo ID.
 - **Parâmetros de Caminho:**
