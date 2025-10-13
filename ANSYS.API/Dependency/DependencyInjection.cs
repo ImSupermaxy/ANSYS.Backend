@@ -1,4 +1,6 @@
-﻿using ANSYS.Application.Global.Usuarios.Mappers;
+﻿using ANSYS.Application;
+using ANSYS.Application.Global.Usuarios.Commands;
+using ANSYS.Application.Global.Usuarios.Mappers;
 using ANSYS.Domain.Abstractions.Context;
 using ANSYS.Domain.Global.Usuarios.Repositories;
 using ANSYS.Domain.Shared.ApiConfig;
@@ -7,7 +9,7 @@ using ANSYS.Infrastructure.Context;
 using ANSYS.Infrastructure.Context.MySql;
 using ANSYS.Infrastructure.Context.Postgres;
 using ANSYS.Infrastructure.Global.Usuarios;
-using System.Text;
+using System.Reflection;
 
 namespace ANSYS.API
 {
@@ -78,5 +80,16 @@ namespace ANSYS.API
         //        };
         //    });
         //}
+
+        public static IServiceCollection AddApplication(this IServiceCollection services)
+        {
+            services.AddMediatR(configuration =>
+            {
+                configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+                configuration.RegisterServicesFromAssembly(typeof(UsuarioCommandGetAll).Assembly);
+            });
+
+            return services;
+        }
     }
 }

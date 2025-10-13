@@ -18,6 +18,10 @@ namespace ANSYS.API.Controllers.Global.Usuarios
 
         #region Endpoints for DEV
 
+        /// <summary>
+        /// Obtem todos usuários cadastrados.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
