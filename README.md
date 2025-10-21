@@ -48,17 +48,21 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
 4. **Compile e execute o projeto:**
 
   - No Visual Studio Community
-    Ctrl + Shift + b
+    "Ctrl + Shift + b" e logo após "Ctrl + f5"
     ou
-    Clique com o botão direito do mouse na solução do projeto ("Solution 'ANSYS.Backend'"), a direita. 
+    Clique com o botão direito do mouse na solução do projeto ("Solution 'ANSYS.Backend'"), a direita e "Build Solution", após isso, no menu acima, com o ícone de "play" verde, verifique se ao lo a opção "IIS Express" está selecionada, caso não selecione-a, e então clique no botão verde de play.
     A solução está dentro do menu "Solution Explorer", caso não veja o menu vá em "View" no menu acima, e selecione a opção "Solution Explorer" ou aperte "Ctrl + alt + l"
     
     A API estará disponível em `http://localhost:7064`.
 
 5. **Instale as dependências do projeto**
 
-  - Abra o "Nuget Package Manager" no menu acima em "Tools", e selecione a opção "Nuget Package Manager" e "Nuget Package Manager for solution" ou clique com o botão direito na solução do projeto, e selecione a opção "Nuget Package Manager for solution"
-  - Instale as bibliotecas de acordo com o projeto expecificado em "Tecnologias Utilizadas"
+   - No terminal execute o comando `dotnet restore` para baixar as dependências de pacotes do projeto.
+   - Ainda no terminal execute o comando `dotnet ef database update --project ANSYS.Infrastructure --startup-project ANSYS.API` para atualizar o banco de dados vinculado ao EntityFramework
+
+     **Observação**
+     Configure uma conexão existente com um banco de dados, o EntityFramework, configurará as tabelas necessárias após isso.
+  
 
 ## Documentação da API (Swagger)
 
