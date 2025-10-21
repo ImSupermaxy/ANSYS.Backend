@@ -1,14 +1,14 @@
-﻿using ANSYS.Domain.Abstractions.Context;
+﻿using ANSYS.Domain.Abstractions.Context.Connections;
 using System.Data;
 
 namespace ANSYS.Infrastructure.Context
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public IDBContext Context { get; private set; }
+        public IConnectionDBContext Context { get; private set; }
         public IDbTransaction Transaction { get; private set; }
 
-        public UnitOfWork(IDBContext context)
+        public UnitOfWork(IConnectionDBContext context)
         {
             Context = context;
         }

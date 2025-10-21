@@ -1,8 +1,7 @@
 using ANSYS.API;
-using ANSYS.Application;
-using Google.Protobuf.WellKnownTypes;
+using ANSYS.Application.Dependency;
+using ANSYS.Dependency.Infrastructure;
 using Microsoft.OpenApi.Models;
-using System.Configuration;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

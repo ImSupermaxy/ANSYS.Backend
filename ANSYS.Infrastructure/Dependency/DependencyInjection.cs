@@ -1,17 +1,15 @@
-﻿using ANSYS.Application;
-using ANSYS.Application.Global.Usuarios.Commands;
+﻿using ANSYS.Application.Global.Usuarios.Commands;
 using ANSYS.Application.Global.Usuarios.Mappers;
-using ANSYS.Domain.Abstractions.Context;
+using ANSYS.Domain.Abstractions.Context.EntityFramework;
 using ANSYS.Domain.Global.Usuarios.Repositories;
-using ANSYS.Domain.Shared.ApiConfig;
-using ANSYS.Infrastructure.Authentication;
-using ANSYS.Infrastructure.Context;
-using ANSYS.Infrastructure.Context.MySql;
-using ANSYS.Infrastructure.Context.Postgres;
+using ANSYS.Infrastructure.Context.EntityFramework;
 using ANSYS.Infrastructure.Global.Usuarios;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace ANSYS.API
+namespace ANSYS.Dependency.Infrastructure
 {
     public static class DependencyInjection
     {
@@ -34,14 +32,15 @@ namespace ANSYS.API
             string cnnStringMysql = configuration.GetConnectionString("Mysql") ??
                                       throw new ArgumentNullException(nameof(configuration));
 
+            services.AddDbContext<AnsysEntityFrameworkContext>(options => options.UseNpgsql(cnnStringPostgres));
+            //services.AddDbContext<AnsysEntityFrameworkContext>(options => options.UseMySQL(cnnStringMysql));
+
             //Entitys
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<UsuarioMapper, UsuarioMapper>();
 
             //Context
-            services.AddScoped<IDBContext>(sp => new DBContextPostgres(cnnStringPostgres));
-            //services.AddScoped<IDBContext>(sp => new DBContextMySQL(cnnStringMysql));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IEntityFrameworkDBContext>(sp => sp.GetRequiredService<AnsysEntityFrameworkContext>());
         }
 
         //Configuração para gerar Token a partir do jwt bearer
@@ -80,16 +79,5 @@ namespace ANSYS.API
         //        };
         //    });
         //}
-
-        public static IServiceCollection AddApplication(this IServiceCollection services)
-        {
-            services.AddMediatR(configuration =>
-            {
-                configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-                configuration.RegisterServicesFromAssembly(typeof(UsuarioCommandGetAll).Assembly);
-            });
-
-            return services;
-        }
     }
 }

@@ -1,10 +1,10 @@
-﻿using ANSYS.Domain.Abstractions.Context;
-using Npgsql;
+﻿using ANSYS.Domain.Abstractions.Context.Connections;
+//using Npgsql;
 using System.Data;
 
 namespace ANSYS.Infrastructure.Context.Postgres
 {
-    public sealed class DBContextPostgres : IDBContext, IDisposable
+    public sealed class DBContextPostgres : IConnectionDBContext, IDisposable
     {
         public string ConnectionString { get; private set; }
         public IDbConnection Connection { get; private set; }
@@ -17,8 +17,8 @@ namespace ANSYS.Infrastructure.Context.Postgres
 
         public IDbConnection CreateConnection()
         {
-            var connection = new NpgsqlConnection(ConnectionString);
-            Connection = connection;
+            //var connection = new NpgsqlConnection(ConnectionString);
+            //Connection = connection;
             Connection.Open();
 
             return Connection;

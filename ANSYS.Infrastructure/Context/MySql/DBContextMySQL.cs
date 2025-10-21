@@ -1,11 +1,11 @@
-﻿using ANSYS.Domain.Abstractions.Context;
-using MySql.Data.MySqlClient;
-using Npgsql;
+﻿using ANSYS.Domain.Abstractions.Context.Connections;
+//using MySql.Data.MySqlClient;
+//using Npgsql;
 using System.Data;
 
 namespace ANSYS.Infrastructure.Context.MySql
 {
-    public sealed class DBContextMySQL : IDBContext, IDisposable
+    public sealed class DBContextMySQL : IConnectionDBContext, IDisposable
     {
         public IDbConnection Connection { get; private set; }
         public string ConnectionString { get; private set; }
@@ -18,8 +18,8 @@ namespace ANSYS.Infrastructure.Context.MySql
 
         public IDbConnection CreateConnection()
         {
-            var connection = new MySqlConnection(ConnectionString);
-            Connection = connection;
+            //var connection = new MySqlConnection(ConnectionString);
+            //Connection = connection;
             Connection.Open();
 
             return Connection;
