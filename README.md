@@ -8,12 +8,15 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
 ## Tecnologias Utilizadas
 
 - C# .NET 8.0
-- swagger
+- Swagger
 - ASP.NET MVC
-- MediatR (em ANSYS.API e ANSYS.Application)
-- Npgsql (caso utilize Posgres, em ANSYS.Infrastructure)
-- Mysql.Data (caso utilize Mysql, em ANSYS.Infrastructure)
-- Dapper (em ANSYS.Infrastructure)
+- Swashbuckle.AspNetCore 6.6.2
+- MediatR 13.0.0 (em ANSYS.API e ANSYS.Application)
+- Entity Framework Core v9.0.10 (em ANSYS.Domain)
+- Dapper 2.1.66 (em ANSYS.Infrastructure)
+- Microsoft.Extensions.Configuration.Abstractions 9.0.10 (em ANSYS.Infrastructure)
+- MySql.EntityFrameworkCore 9.0.6 (caso utilize Mysql, em ANSYS.Infrastructure)
+- Npgsql.EntityFrameworkCore.PostgreSQL 9.0.4 (caso utilize Posgres, em ANSYS.Infrastructure)
 
 ## Pré-requisitos
 
@@ -37,10 +40,10 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
    ```
 
 3. **Configure o banco de dados:**
-
+   
    Edite o arquivo [appsettings.Development.json](ANSYS.API/appsettings.Development.json) na sessão "ConnectionStrings" com as configurações do seu banco de dados (Mysql ou Postgress).
 
-   Edite também a sua escolha no arquivo [DependencyInjection.cs](ANSYS.API/Dependency/DependencyInjection.cs) descomente o banco de dados a sua preferência dentro do método de "AddPersistence".
+   Edite também a sua escolha no arquivo [DependencyInjection.cs](ANSYS.Infrastructure/Dependency/DependencyInjection.cs) descomente o banco de dados a sua preferência dentro do método de "AddPersistence".
 
 4. **Compile e execute o projeto:**
 
