@@ -22,12 +22,12 @@ namespace ANSYS.Infrastructure.Abstractions.Repositories
             return await query.ToListAsync(cancellationToken);
         }
 
-        public async Task<T?> GetById(uint id, CancellationToken cancellationToken = default)
+        public async Task<T?> GetById(Guid id, CancellationToken cancellationToken = default)
         {
             return await _DBContext.Set<T>().FirstOrDefaultAsync(entity => entity.Id.Equals(id), cancellationToken);
         }
 
-        public async Task<uint> Insert(T entity, CancellationToken cancellationToken = default)
+        public async Task<Guid> Insert(T entity, CancellationToken cancellationToken = default)
         {
             var result = await _DBContext.Set<T>().AddAsync(entity, cancellationToken);
 
@@ -42,7 +42,7 @@ namespace ANSYS.Infrastructure.Abstractions.Repositories
             return true;
         }
 
-        public async Task<bool> Delete(uint id, CancellationToken cancellationToken = default)
+        public async Task<bool> Delete(Guid id, CancellationToken cancellationToken = default)
         {
             var entity = await GetById(id, cancellationToken);
             if (entity != null)

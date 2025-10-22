@@ -15,7 +15,7 @@ namespace ANSYS.Domain.Global.Usuarios.Entities
             Email = email;
         }
 
-        public Usuario(uint id, string nome, string email)
+        public Usuario(Guid id, string nome, string email)
         {
             Id = id;
             Nome = nome;

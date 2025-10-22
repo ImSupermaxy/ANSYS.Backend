@@ -9,7 +9,7 @@ namespace ANSYS.Application.Global.Usuarios.Handlers
 {
     public class UsuarioHandler : IRequestHandler<UsuarioCommandGetAll, IEnumerable<Usuario>>,
         IRequestHandler<UsuarioCommandGetById, Usuario>,
-        IRequestHandler<UsuarioCommandInsert, bool>,
+        IRequestHandler<UsuarioCommandInsert, Guid?>,
         IRequestHandler<UsuarioCommandUpdate, bool>
     {
         private readonly IEntityFrameworkDBContext _dbcotext;
@@ -47,19 +47,19 @@ namespace ANSYS.Application.Global.Usuarios.Handlers
             }
         }
 
-        public async Task<bool> Handle(UsuarioCommandInsert request, CancellationToken cancellationToken)
+        public async Task<Guid?> Handle(UsuarioCommandInsert request, CancellationToken cancellationToken)
         {
             try
             {
-                var newId = await _repository.Insert(_mapper.ToEntity(request));
+                var result = await _repository.Insert(_mapper.ToEntity(request));
 
                 await _dbcotext.SaveChangesAsync();
 
-                return newId > 0;
+                return result;
             }
             catch (Exception ex)
             {
-                return false;
+                return null;
             }
         }
 

@@ -21,7 +21,7 @@ namespace ANSYS.API.Controllers.Global.Usuarios
         /// <summary>
         /// Obtem todos usuários cadastrados.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Retorna uma lista dos usuários obtidos</returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -33,10 +33,15 @@ namespace ANSYS.API.Controllers.Global.Usuarios
             return Ok(result);
         }
 
+        /// <summary>
+        /// Obtem um usuário cadastrado pelo seu identificador.
+        /// </summary>
+        /// <param name="id">Identificador do usuário</param>
+        /// <returns>Retorna um usuário</returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid? id)
         {
-            var result = await Sender.Send(new UsuarioCommandGetById(id >= 0 ? (uint)id : default!));
+            var result = await Sender.Send(new UsuarioCommandGetById(id != null ? id.Value : default!));
 
             if (result == default)
                 return NotFound();
@@ -44,17 +49,26 @@ namespace ANSYS.API.Controllers.Global.Usuarios
             return Ok(result);
         }
 
+        /// <summary>
+        /// Insere um novo usuário
+        /// </summary>
+        /// <param name="command">O payload com as informações do usuário</param>
+        /// <returns>Retorna um sucesso ou falha no insert</returns>
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Post(UsuarioCommandInsert command)
         {
             var result = await Sender.Send(command);
-            if (!result)
+            if (result == null)
                 return BadRequest();
 
-            return Ok();
+            return Ok(result);
         }
 
+        /// <summary>
+        /// Atualiza um usuário existente
+        /// </summary>
+        /// <param name="command">O payload com as informações do usuário</param>
+        /// <returns>Retorna um sucesso ou falha na atualização</returns>
         [HttpPut]
         public async Task<IActionResult> Put(UsuarioCommandUpdate command)
         {

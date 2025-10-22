@@ -8,6 +8,6 @@ namespace ANSYS.Domain.Abstractions.Entities
 {
     public class Entity : IEntity
     {
-        public uint Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

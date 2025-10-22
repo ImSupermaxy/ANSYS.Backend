@@ -3,5 +3,5 @@ using MediatR;
 
 namespace ANSYS.Application.Global.Usuarios.Commands
 {
-    public sealed record UsuarioCommandGetById(uint Id) : IRequest<Usuario>;
+    public sealed record UsuarioCommandGetById(Guid Id) : IRequest<Usuario>;
 }
