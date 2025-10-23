@@ -5,7 +5,7 @@ using ANSYS.Infrastructure.Context.EntityFramework;
 
 namespace ANSYS.Infrastructure.Global.Usuarios
 {
-    public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
+    public class UsuarioRepository : Repository<Usuario, Guid>, IUsuarioRepository
     {
         public UsuarioRepository(AnsysEntityFrameworkContext dbContext)
             : base(dbContext)

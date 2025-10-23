@@ -1,6 +1,6 @@
-﻿using ANSYS.Application.Global.Usuarios.Commands;
+﻿using ANSYS.Application.Global.Pedidos.Commands;
+using ANSYS.Application.Global.Usuarios.Commands;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ANSYS.API.Controllers.Global.Usuarios
@@ -19,7 +19,7 @@ namespace ANSYS.API.Controllers.Global.Usuarios
         #region Endpoints for DEV
 
         /// <summary>
-        /// Obtem todos usuários cadastrados.
+        /// Obtem todos os usuários cadastrados.
         /// </summary>
         /// <returns>Retorna uma lista dos usuários obtidos</returns>
         [HttpGet]

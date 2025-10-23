@@ -1,4 +1,5 @@
-﻿using ANSYS.Domain.Global.Usuarios.Entities;
+﻿using ANSYS.Application.Global.Usuarios.Commands;
+using ANSYS.Domain.Global.Usuarios.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -19,6 +20,11 @@ namespace ANSYS.Infrastructure.Global.Usuarios.Configurations
             builder.Property(c => c.Email)
                 .IsRequired()
                 .HasMaxLength(255);
+
+            builder.HasData(
+                new Usuario(new Guid("00000000-0000-0000-0000-000000000000".Replace("0", "9")), "Master", "master@ansys.com"),
+                new Usuario(new Guid("22222222-2222-2222-2222-222222222222"), "Administrador", "admin@ansys.com")
+            );
         }
     }
 }

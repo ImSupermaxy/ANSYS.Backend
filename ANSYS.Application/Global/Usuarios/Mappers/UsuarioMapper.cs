@@ -11,9 +11,10 @@ namespace ANSYS.Application.Global.Usuarios.Mappers
             return new Usuario(command.Nome, command.Email);
         }
 
-        public Usuario ToEntity(UsuarioCommandUpdate command)
+        public Usuario ToEntity(UsuarioCommandUpdate command, Usuario entity)
         {
-            return new Usuario(command.Id, command.Nome, command.Email);
+            entity.Update(command.Nome, command.Email);
+            return entity;
         }
     }
 }

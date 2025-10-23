@@ -9,6 +9,6 @@ namespace ANSYS.Domain.Abstractions.Mappers
         where TCommandUpdate : ICommand
     {
         T ToEntity(TCommandInsert command);
-        T ToEntity(TCommandUpdate command);
+        T ToEntity(TCommandUpdate command, T entity);
     }
 }

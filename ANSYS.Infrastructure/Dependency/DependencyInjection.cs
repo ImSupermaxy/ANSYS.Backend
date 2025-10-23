@@ -1,13 +1,14 @@
-﻿using ANSYS.Application.Global.Usuarios.Commands;
+﻿using ANSYS.Application.Global.Pedidos.Mappers;
 using ANSYS.Application.Global.Usuarios.Mappers;
 using ANSYS.Domain.Abstractions.Context.EntityFramework;
+using ANSYS.Domain.Global.Pedidos.Repositories;
 using ANSYS.Domain.Global.Usuarios.Repositories;
 using ANSYS.Infrastructure.Context.EntityFramework;
+using ANSYS.Infrastructure.Global.Pedidos;
 using ANSYS.Infrastructure.Global.Usuarios;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace ANSYS.Dependency.Infrastructure
 {
@@ -38,6 +39,8 @@ namespace ANSYS.Dependency.Infrastructure
             //Entitys
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<UsuarioMapper, UsuarioMapper>();
+            services.AddScoped<IPedidoRepository, PedidoRepository>();
+            services.AddScoped<PedidoMapper, PedidoMapper>();
 
             //Context
             services.AddScoped<IEntityFrameworkDBContext>(sp => sp.GetRequiredService<AnsysEntityFrameworkContext>());

@@ -52,6 +52,8 @@ namespace ANSYS.Application.Global.Usuarios.Handlers
             try
             {
                 var result = await _repository.Insert(_mapper.ToEntity(request));
+                if (result != null)
+                    return result;
 
                 await _dbcotext.SaveChangesAsync();
 
@@ -67,7 +69,11 @@ namespace ANSYS.Application.Global.Usuarios.Handlers
         {
             try
             {
-                var result = await _repository.Update(_mapper.ToEntity(request));
+                var entity = await _repository.GetById(request.Id);
+                if (entity == null)
+                    return false;
+
+                var result = await _repository.Update(_mapper.ToEntity(request, entity));
 
                 await _dbcotext.SaveChangesAsync();
 

@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ANSYS.Infrastructure.Abstractions.Repositories
 {
-    public class Repository<T> : IRepository<T>
-        where T : Entity
+    public class Repository<T, TId> : IRepository<T, TId>
+        where T : Entity<TId>
     {
         protected readonly AnsysEntityFrameworkContext _DBContext;
 
@@ -22,16 +22,16 @@ namespace ANSYS.Infrastructure.Abstractions.Repositories
             return await query.ToListAsync(cancellationToken);
         }
 
-        public async Task<T?> GetById(Guid id, CancellationToken cancellationToken = default)
+        public async Task<T?> GetById(TId id, CancellationToken cancellationToken = default)
         {
             return await _DBContext.Set<T>().FirstOrDefaultAsync(entity => entity.Id.Equals(id), cancellationToken);
         }
 
-        public async Task<Guid> Insert(T entity, CancellationToken cancellationToken = default)
+        public async Task<TId> Insert(T entity, CancellationToken cancellationToken = default)
         {
             var result = await _DBContext.Set<T>().AddAsync(entity, cancellationToken);
 
-            return result.Entity.Id;
+            return result.Entity.Id;//internal entry
         }
 
         public async Task<bool> Update(T entity, CancellationToken cancellationToken = default)
@@ -42,7 +42,7 @@ namespace ANSYS.Infrastructure.Abstractions.Repositories
             return true;
         }
 
-        public async Task<bool> Delete(Guid id, CancellationToken cancellationToken = default)
+        public async Task<bool> Delete(TId id, CancellationToken cancellationToken = default)
         {
             var entity = await GetById(id, cancellationToken);
             if (entity != null)

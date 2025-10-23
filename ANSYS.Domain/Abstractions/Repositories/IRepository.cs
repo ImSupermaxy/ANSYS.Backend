@@ -3,13 +3,13 @@ using ANSYS.Domain.Abstractions.Entities;
 
 namespace ANSYS.Domain.Abstractions.Repositories
 {
-    public interface IRepository<T>
-        where T : IEntity
+    public interface IRepository<T, TId>
+        where T : Entity<TId>
     {
         Task<IEnumerable<T>> GetAll(CancellationToken cancellationToken = default);
-        Task<T?> GetById(Guid id, CancellationToken cancellationToken = default);
-        Task<Guid> Insert(T entity, CancellationToken cancellationToken = default);
+        Task<T?> GetById(TId id, CancellationToken cancellationToken = default);
+        Task<TId> Insert(T entity, CancellationToken cancellationToken = default);
         Task<bool> Update(T entity, CancellationToken cancellationToken = default);
-        Task<bool> Delete(Guid id, CancellationToken cancellationToken = default);
+        Task<bool> Delete(TId id, CancellationToken cancellationToken = default);
     }
 }
