@@ -15,7 +15,6 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
 - Entity Framework Core v9.0.10 (em ANSYS.Domain)
 - Dapper 2.1.66 (em ANSYS.Infrastructure)
 - Microsoft.Extensions.Configuration.Abstractions 9.0.10 (em ANSYS.Infrastructure)
-- MySql.EntityFrameworkCore 9.0.6 (caso utilize Mysql, em ANSYS.Infrastructure)
 - Npgsql.EntityFrameworkCore.PostgreSQL 9.0.4 (caso utilize Posgres, em ANSYS.Infrastructure)
 
 ## Pré-requisitos
@@ -41,19 +40,20 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
 
 3. **Configure o banco de dados:**
    
-   Edite o arquivo [appsettings.Development.json](ANSYS.API/appsettings.Development.json) na sessão "ConnectionStrings" com as configurações do seu banco de dados (Mysql ou Postgress).
+   Edite o arquivo [appsettings.Development.json](ANSYS.API/appsettings.Development.json) na sessão "ConnectionStrings" com as configurações do seu banco de dados (Postgress).
 
    Edite também a sua escolha no arquivo [DependencyInjection.cs](ANSYS.Infrastructure/Dependency/DependencyInjection.cs) descomente o banco de dados a sua preferência dentro do método de "AddPersistence".
+   Caso queira utilize no lugar do banco com conexão do entity framework, utilize o banco de dados em tempo de execução, ainda no arquivo de [DependencyInjection.cs](ANSYS.Infrastructure/Dependency/DependencyInjection.cs), altere a linha 53 de "false" para "true".
 
-4. **Compile e execute o projeto:**
+5. **Compile e execute o projeto:**
 
   - No Visual Studio Community
     "Ctrl + Shift + b" e logo após "Ctrl + f5"
     ou
-    Clique com o botão direito do mouse na solução do projeto ("Solution 'ANSYS.Backend'"), a direita e "Build Solution", após isso, no menu acima, com o ícone de "play" verde, verifique se ao lo a opção "IIS Express" está selecionada, caso não selecione-a, e então clique no botão verde de play.
-    A solução está dentro do menu "Solution Explorer", caso não veja o menu vá em "View" no menu acima, e selecione a opção "Solution Explorer" ou aperte "Ctrl + alt + l"
+    Clique com o botão direito do mouse na solução do projeto ("Solution 'ANSYS.Backend'"), a direita e "Build Solution", após isso, no menu acima, com o ícone de "play" verde, verifique se ao lado a opção "IIS Express" está selecionada, caso não selecione-a, e então clique no botão verde de play.
+    A solução está dentro do menu "Solution Explorer", caso não a veja o menu vá em "View" no menu acima, e selecione a opção "Solution Explorer" ou aperte "Ctrl + alt + l"
     
-    A API estará disponível em `http://localhost:7064`.
+    A API estará disponível em `http://localhost:44388`.
 
 5. **Instale as dependências do projeto**
 
