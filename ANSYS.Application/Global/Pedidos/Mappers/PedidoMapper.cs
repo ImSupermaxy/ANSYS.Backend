@@ -8,13 +8,13 @@ namespace ANSYS.Application.Global.Pedidos.Mappers
     {
         public Pedido ToEntity(PedidoCommandInsert command)
         {
-            return new Pedido(command.ClienteId, command.Subtotal, command.Taxa, command.Desconto/*, command.UserId*/);
+            return new Pedido(command.ClienteId, command.Subtotal, command.Taxa, command.Desconto);
         }
 
         public Pedido ToEntity(PedidoCommandUpdate command, Pedido entity)
         {
             return new Pedido(command.Id, command.ClienteId, command.Subtotal, command.Taxa, command.Desconto, 
-                command.Status, /*entity.UsuarioInsId,*/ entity.DataInserido/*, command.UserId*/);
+                command.Status, entity.DataInserido);
         }
     }
 }

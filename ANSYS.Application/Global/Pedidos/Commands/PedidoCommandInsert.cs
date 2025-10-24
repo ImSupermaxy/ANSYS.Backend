@@ -6,6 +6,6 @@ namespace ANSYS.Application.Global.Pedidos.Commands
 {
     public sealed class PedidoCommandInsert : PedidoGeneral, ICommand, IRequest<int?>
     {
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
     }
 }

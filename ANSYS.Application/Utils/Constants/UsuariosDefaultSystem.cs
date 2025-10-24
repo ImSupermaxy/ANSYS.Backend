@@ -2,15 +2,10 @@
 {
     public static class UsuariosDefaultSystem
     {
-        private const string USER_DEFAULT = "99999999-9999-9999-9999-999999999999";
-        private const string USER_ATUALIZACAO = "22222222-2222-2222-2222-222222222222";
+        private const int USER_DEFAULT = 1;
+        private const int USER_ATUALIZACAO = 2;
 
-        public static Guid UserDefault => GetValueInGuid(USER_DEFAULT);
-        public static Guid UserAtualizacao => GetValueInGuid(USER_ATUALIZACAO);
-
-        private static Guid GetValueInGuid(string value)
-        {
-            return new Guid(value);
-        }
+        public static int UserDefault => USER_DEFAULT;
+        public static int UserAtualizacao => USER_ATUALIZACAO;
     }
 }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ANSYS.Domain.Abstractions.Entities
 {
-    public class Entity<T> : IEntity
+    public class Entity : IEntity
     {
-        public T Id { get; set; }
+        public int Id { get; set; }
     }
 }

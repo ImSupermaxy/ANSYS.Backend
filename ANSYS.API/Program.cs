@@ -16,8 +16,8 @@ builder.Services.AddSwaggerGen(options =>
     {
         Version = "v1",
         Title = "ANSYS API",
-        Description = "Uma ASP.NET Core Web API para gerenciamento de funcionarios, pedidos, menu e clientes de um restaurante.",
-        //TermsOfService = new Uri("https://example.com/terms"),
+        Description = "Uma ASP.NET Core Web API para gerenciamento de funcionarios, pedidos, menu e clientes de um restaurante. \n\n\nObservação: Não esqueça de olhar o README no nosso github (visualize em termos de serviço). \n\nCaso o banco do entity framework não esteja funcionando, utilize o banco de dados em tempo de execução!\n\nAtualize em: ANSYS.Infrastructure -> Dependency -> DependencyInjection.cs -> linha 53, mude de \"false\" para \"true\"",
+        TermsOfService = new Uri("https://github.com/ImSupermaxy/ANSYS.Backend"),
     });
 
     // using System.Reflection;

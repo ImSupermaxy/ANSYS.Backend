@@ -3,7 +3,7 @@ using ANSYS.Domain.Global.Pedidos.Entities;
 
 namespace ANSYS.Domain.Global.Pedidos.Repositories
 {
-    public interface IPedidoRepository : IRepository<Pedido, int>
+    public interface IPedidoRepository : IRepository<Pedido>
     {
     }
 }

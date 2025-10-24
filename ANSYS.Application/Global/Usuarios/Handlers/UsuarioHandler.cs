@@ -9,7 +9,7 @@ namespace ANSYS.Application.Global.Usuarios.Handlers
 {
     public class UsuarioHandler : IRequestHandler<UsuarioCommandGetAll, IEnumerable<Usuario>>,
         IRequestHandler<UsuarioCommandGetById, Usuario>,
-        IRequestHandler<UsuarioCommandInsert, Guid?>,
+        IRequestHandler<UsuarioCommandInsert, int?>,
         IRequestHandler<UsuarioCommandUpdate, bool>
     {
         private readonly IEntityFrameworkDBContext _dbcotext;
@@ -47,7 +47,7 @@ namespace ANSYS.Application.Global.Usuarios.Handlers
             }
         }
 
-        public async Task<Guid?> Handle(UsuarioCommandInsert request, CancellationToken cancellationToken)
+        public async Task<int?> Handle(UsuarioCommandInsert request, CancellationToken cancellationToken)
         {
             try
             {

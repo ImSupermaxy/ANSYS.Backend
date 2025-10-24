@@ -1,4 +1,5 @@
-﻿using ANSYS.Application.Global.Pedidos.Commands;
+﻿using ANSYS.Application.Global.PedidoItens.Commands;
+using ANSYS.Application.Global.Pedidos.Commands;
 using ANSYS.Application.Global.Pedidos.Mappers;
 using ANSYS.Application.Utils.Constants;
 using ANSYS.Domain.Abstractions.Context.EntityFramework;
@@ -19,19 +20,24 @@ namespace ANSYS.Application.Global.Pedidos.Handlers
         private readonly IEntityFrameworkDBContext _dbcotext;
         private readonly IPedidoRepository _repository;
         private readonly PedidoMapper _mapper;
+        private readonly ISender _sender;
 
-        public PedidoHandler(IEntityFrameworkDBContext dbcotext, IPedidoRepository repository, PedidoMapper mapper)
+        public PedidoHandler(IEntityFrameworkDBContext dbcotext, 
+            IPedidoRepository repository,
+            PedidoMapper mapper,
+            ISender sender)
         {
             _dbcotext = dbcotext;
             _repository = repository;
             _mapper = mapper;
+            _sender = sender;
         }
 
         public async Task<IEnumerable<Pedido>> Handle(PedidoCommandGetAll request, CancellationToken cancellationToken)
         {
             try
             {
-                var result = await _repository.GetAll();
+                var result = await _repository.GetAll(cancellationToken);
 
                 //fazer o filtro aqui?...
                 return result;
@@ -46,7 +52,7 @@ namespace ANSYS.Application.Global.Pedidos.Handlers
         {
             try
             {
-                return await _repository.GetById(request.Id) ?? default!;
+                return await _repository.GetById(request.Id, cancellationToken) ?? default!;
             }
             catch (Exception ex)
             {
@@ -61,13 +67,23 @@ namespace ANSYS.Application.Global.Pedidos.Handlers
                 var command = request.ToCommandInsert();
                 command.UserId = UsuariosDefaultSystem.UserDefault;
 
-                var result = await _repository.Insert(_mapper.ToEntity(command));
-                //if (!(result > 0))
-                //    return 0;
+                var entity = _mapper.ToEntity(command);
+
+                var result = await _repository.Insert(entity, cancellationToken);
 
                 await _dbcotext.SaveChangesAsync();
 
-                return result;
+                var lastInsert = (await _repository.GetAll(cancellationToken)).LastOrDefault();
+
+                if (lastInsert != entity)
+                    return null;
+
+                var resultItens = await _sender.Send(new PedidoItemCommandInsertList(lastInsert.Id, request.Itens), cancellationToken);
+
+                if (resultItens.Count() != request.Itens.Count())
+                    return null;
+
+                return lastInsert.Id;
             }
             catch (Exception ex)
             {
@@ -81,16 +97,16 @@ namespace ANSYS.Application.Global.Pedidos.Handlers
             {
                 request.UserId = UsuariosDefaultSystem.UserAtualizacao;
 
-                var entity = await _repository.GetById(request.Id);
+                var entity = await _repository.GetById(request.Id, cancellationToken);
                 if (entity == null)
                     return false;
 
                 if (entity.Status == EStatusPedido.Cancelado)
                     return false;
 
-                var result = await _repository.Update(_mapper.ToEntity(request, entity));
+                var result = await _repository.Update(_mapper.ToEntity(request, entity), cancellationToken);
 
-                await _dbcotext.SaveChangesAsync();
+                await _dbcotext.SaveChangesAsync(cancellationToken);
 
                 return result;
             }
@@ -104,15 +120,15 @@ namespace ANSYS.Application.Global.Pedidos.Handlers
         {
             try
             {
-                var entity = await _repository.GetById(request.Id);
+                var entity = await _repository.GetById(request.Id, cancellationToken);
                 if (entity == null)
                     return false;
 
                 entity.CancelaPedido(UsuariosDefaultSystem.UserAtualizacao);
 
-                var result = await _repository.Update(entity);
+                var result = await _repository.Update(entity, cancellationToken);
 
-                await _dbcotext.SaveChangesAsync();
+                await _dbcotext.SaveChangesAsync(cancellationToken);
 
                 return result;
             }
@@ -126,7 +142,7 @@ namespace ANSYS.Application.Global.Pedidos.Handlers
         {
             try
             {
-                var entity = await _repository.GetById(request.Id);
+                var entity = await _repository.GetById(request.Id, cancellationToken);
                 if (entity == null)
                     return false;
 
@@ -134,7 +150,7 @@ namespace ANSYS.Application.Global.Pedidos.Handlers
 
                 var result = await _repository.Update(entity);
 
-                await _dbcotext.SaveChangesAsync();
+                await _dbcotext.SaveChangesAsync(cancellationToken);
 
                 return result;
             }
@@ -142,16 +158,6 @@ namespace ANSYS.Application.Global.Pedidos.Handlers
             {
                 return false;
             }
-        }
-
-        private async Task<int> GetLastId()
-        {
-            var lastPedido = (await _repository.GetAll()).LastOrDefault();
-            var lastId = 0;
-            if (lastPedido != null)
-                lastId = lastPedido.Id;
-
-            return lastId;
         }
     }
 }

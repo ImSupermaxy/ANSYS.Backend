@@ -5,7 +5,7 @@ using ANSYS.Infrastructure.Context.EntityFramework;
 
 namespace ANSYS.Infrastructure.Global.Pedidos
 {
-    public class PedidoRepository : Repository<Pedido, int>, IPedidoRepository
+    public class PedidoRepository : Repository<Pedido>, IPedidoRepository
     {
         public PedidoRepository(AnsysEntityFrameworkContext dbContext)
             : base(dbContext)

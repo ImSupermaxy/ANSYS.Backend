@@ -10,6 +10,6 @@ namespace ANSYS.Application.Global.Pedidos.Commands
         public int Id { get; set; }
         public EStatusPedido Status { get; set; }
 
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
     }
 }

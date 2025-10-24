@@ -1,9 +1,15 @@
-﻿using ANSYS.Application.Global.Pedidos.Mappers;
+﻿using ANSYS.Application.Global.PedidoItens.Mappers;
+using ANSYS.Application.Global.Pedidos.Mappers;
 using ANSYS.Application.Global.Usuarios.Mappers;
+using ANSYS.Domain.Abstractions.Context;
 using ANSYS.Domain.Abstractions.Context.EntityFramework;
+using ANSYS.Domain.Global.PedidoItens.Repositories;
 using ANSYS.Domain.Global.Pedidos.Repositories;
 using ANSYS.Domain.Global.Usuarios.Repositories;
+using ANSYS.Infrastructure.Context;
 using ANSYS.Infrastructure.Context.EntityFramework;
+using ANSYS.Infrastructure.Context.Local;
+using ANSYS.Infrastructure.Global.PedidoItens;
 using ANSYS.Infrastructure.Global.Pedidos;
 using ANSYS.Infrastructure.Global.Usuarios;
 using Microsoft.EntityFrameworkCore;
@@ -30,20 +36,21 @@ namespace ANSYS.Dependency.Infrastructure
             string cnnStringPostgres = configuration.GetConnectionString("Postgresql") ??
                                       throw new ArgumentNullException(nameof(configuration));
 
-            string cnnStringMysql = configuration.GetConnectionString("Mysql") ??
-                                      throw new ArgumentNullException(nameof(configuration));
-
             services.AddDbContext<AnsysEntityFrameworkContext>(options => options.UseNpgsql(cnnStringPostgres));
-            //services.AddDbContext<AnsysEntityFrameworkContext>(options => options.UseMySQL(cnnStringMysql));
 
             //Entitys
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<UsuarioMapper, UsuarioMapper>();
             services.AddScoped<IPedidoRepository, PedidoRepository>();
             services.AddScoped<PedidoMapper, PedidoMapper>();
+            services.AddScoped<IPedidoItemRepository, PedidoItemRepository>();
+            services.AddScoped<PedidoItemMapper, PedidoItemMapper>();
 
             //Context
             services.AddScoped<IEntityFrameworkDBContext>(sp => sp.GetRequiredService<AnsysEntityFrameworkContext>());
+
+            //Configuração de qual banco de dados será usado...
+            DatabaseRunModeConfiguration.UseLocalDatabase(false);
         }
 
         //Configuração para gerar Token a partir do jwt bearer

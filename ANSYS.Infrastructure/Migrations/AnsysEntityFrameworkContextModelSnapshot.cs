@@ -23,6 +23,38 @@ namespace ANSYS.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ANSYS.Domain.Global.PedidoItens.Entities.PedidoItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Desconto")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("PedidoId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantidade")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1);
+
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Taxa")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PedidoId");
+
+                    b.ToTable("PedidoItens", "public");
+                });
+
             modelBuilder.Entity("ANSYS.Domain.Global.Pedidos.Entities.Pedido", b =>
                 {
                     b.Property<int>("Id")
@@ -31,8 +63,8 @@ namespace ANSYS.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("ClienteId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("integer");
 
                     b.Property<TimeSpan>("DataInserido")
                         .HasColumnType("interval");
@@ -64,9 +96,11 @@ namespace ANSYS.Infrastructure.Migrations
 
             modelBuilder.Entity("ANSYS.Domain.Global.Usuarios.Entities.Usuario", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -78,6 +112,11 @@ namespace ANSYS.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
+                    b.Property<int>("Perfil")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(3);
+
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios", "public");
@@ -85,16 +124,29 @@ namespace ANSYS.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("99999999-9999-9999-9999-999999999999"),
+                            Id = 1,
                             Email = "master@ansys.com",
-                            Nome = "Master"
+                            Nome = "Master",
+                            Perfil = 1
                         },
                         new
                         {
-                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            Id = 2,
                             Email = "admin@ansys.com",
-                            Nome = "Administrador"
+                            Nome = "Administrador",
+                            Perfil = 1
                         });
+                });
+
+            modelBuilder.Entity("ANSYS.Domain.Global.PedidoItens.Entities.PedidoItem", b =>
+                {
+                    b.HasOne("ANSYS.Domain.Global.Pedidos.Entities.Pedido", "Pedido")
+                        .WithMany("Itens")
+                        .HasForeignKey("PedidoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pedido");
                 });
 
             modelBuilder.Entity("ANSYS.Domain.Global.Pedidos.Entities.Pedido", b =>
@@ -106,6 +158,11 @@ namespace ANSYS.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Cliente");
+                });
+
+            modelBuilder.Entity("ANSYS.Domain.Global.Pedidos.Entities.Pedido", b =>
+                {
+                    b.Navigation("Itens");
                 });
 
             modelBuilder.Entity("ANSYS.Domain.Global.Usuarios.Entities.Usuario", b =>

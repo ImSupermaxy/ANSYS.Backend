@@ -17,8 +17,6 @@ namespace ANSYS.API.Controllers.Global.Pedidos
             Sender = sender;
         }
 
-        #region Endpoints for DEV
-
         /// <summary>
         /// Obtem todos os pedidos cadastrados.
         /// </summary>
@@ -38,7 +36,7 @@ namespace ANSYS.API.Controllers.Global.Pedidos
         }
 
         /// <summary>
-        /// Obtem um pedidos cadastrado pelo seu identificador.
+        /// Obtem um pedido cadastrado pelo seu identificador.
         /// </summary>
         /// <param name="id">Identificador do pedido</param>
         /// <returns>Retorna um pedido</returns>
@@ -103,8 +101,6 @@ namespace ANSYS.API.Controllers.Global.Pedidos
 
             return Ok();
         }
-
-        #endregion
 
     }
 }

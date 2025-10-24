@@ -22,9 +22,11 @@ namespace ANSYS.Infrastructure.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nome = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                    Email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Perfil = table.Column<int>(type: "integer", nullable: false, defaultValue: 3)
                 },
                 constraints: table =>
                 {
@@ -38,7 +40,7 @@ namespace ANSYS.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ClienteId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ClienteId = table.Column<int>(type: "integer", nullable: false),
                     Subtotal = table.Column<decimal>(type: "numeric", nullable: false),
                     Taxa = table.Column<decimal>(type: "numeric", nullable: false),
                     Desconto = table.Column<decimal>(type: "numeric", nullable: false),
@@ -59,15 +61,46 @@ namespace ANSYS.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PedidoItens",
+                schema: "public",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PedidoId = table.Column<int>(type: "integer", nullable: false),
+                    Quantidade = table.Column<int>(type: "integer", nullable: false, defaultValue: 1),
+                    Subtotal = table.Column<decimal>(type: "numeric", nullable: false),
+                    Taxa = table.Column<decimal>(type: "numeric", nullable: false),
+                    Desconto = table.Column<decimal>(type: "numeric", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PedidoItens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PedidoItens_Pedidos_PedidoId",
+                        column: x => x.PedidoId,
+                        principalSchema: "public",
+                        principalTable: "Pedidos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 schema: "public",
                 table: "Usuarios",
-                columns: new[] { "Id", "Email", "Nome" },
+                columns: new[] { "Id", "Email", "Nome", "Perfil" },
                 values: new object[,]
                 {
-                    { new Guid("22222222-2222-2222-2222-222222222222"), "admin@ansys.com", "Administrador" },
-                    { new Guid("99999999-9999-9999-9999-999999999999"), "master@ansys.com", "Master" }
+                    { 1, "master@ansys.com", "Master", 1 },
+                    { 2, "admin@ansys.com", "Administrador", 1 }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PedidoItens_PedidoId",
+                schema: "public",
+                table: "PedidoItens",
+                column: "PedidoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pedidos_ClienteId",
@@ -79,6 +112,10 @@ namespace ANSYS.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "PedidoItens",
+                schema: "public");
+
             migrationBuilder.DropTable(
                 name: "Pedidos",
                 schema: "public");

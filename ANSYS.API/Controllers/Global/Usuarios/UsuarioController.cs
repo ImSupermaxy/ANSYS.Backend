@@ -39,7 +39,7 @@ namespace ANSYS.API.Controllers.Global.Usuarios
         /// <param name="id">Identificador do usuário</param>
         /// <returns>Retorna um usuário</returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid? id)
+        public async Task<IActionResult> GetById(int? id)
         {
             var result = await Sender.Send(new UsuarioCommandGetById(id != null ? id.Value : default!));
 
