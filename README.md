@@ -16,6 +16,7 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
 - Dapper 2.1.66 (em ANSYS.Infrastructure)
 - Microsoft.Extensions.Configuration.Abstractions 9.0.10 (em ANSYS.Infrastructure)
 - Npgsql.EntityFrameworkCore.PostgreSQL 9.0.4 (caso utilize Posgres, em ANSYS.Infrastructure)
+- Moq 4.20.72 (em CrudApplicationTests)
 
 ## Pré-requisitos
 
