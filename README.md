@@ -110,7 +110,7 @@ Abaixo está a descrição dos principais endpoints da API:
   ```json
   {
     "nome": "Lucas",
-    "email": "maria@exemplo.com"
+    "email": "Lucas@exemplo.com"
   }
   ```
 - **Resposta:**
@@ -118,6 +118,7 @@ Abaixo está a descrição dos principais endpoints da API:
     ```json
     3
     ```
+  - **400 Bad Request** (se der alguma exceção ou o email do usuário já estiver cadastrado)
 
 ### **3. GET /api/v1/usuario/{id}**
 
@@ -135,6 +136,7 @@ Abaixo está a descrição dos principais endpoints da API:
     }
     ```
   - **404 Not Found** (se o usuário não for encontrado)
+  - **400 Bad Request** (se der alguma exceção ou o email do usuário já estiver cadastrado)
 
 ### **4. POST /api/v1/pedido**
 
