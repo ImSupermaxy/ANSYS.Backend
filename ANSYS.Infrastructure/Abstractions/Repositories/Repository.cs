@@ -36,8 +36,8 @@ namespace ANSYS.Infrastructure.Abstractions.Repositories
         {
             if (DatabaseRunModeConfiguration.IsLocalDataBase)
                 return _dbLocal.GetById(id);
-            else
-                return await _DBContext.Set<T>().FirstOrDefaultAsync(entity => entity.Id.Equals(id), cancellationToken);
+
+            return await _DBContext.Set<T>().FirstOrDefaultAsync(entity => entity.Id.Equals(id), cancellationToken);
         }
 
         public async Task<int> Insert(T entity, CancellationToken cancellationToken = default)
@@ -49,8 +49,7 @@ namespace ANSYS.Infrastructure.Abstractions.Repositories
             }
 
             var result = await _DBContext.Set<T>().AddAsync(entity, cancellationToken);
-
-            return result.Entity.Id;//internal entry
+            return result.Entity.Id;
         }
 
         public async Task<bool> Update(T entity, CancellationToken cancellationToken = default)

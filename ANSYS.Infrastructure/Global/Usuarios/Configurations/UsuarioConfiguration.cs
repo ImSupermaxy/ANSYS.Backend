@@ -1,5 +1,4 @@
-﻿using ANSYS.Application.Global.Usuarios.Commands;
-using ANSYS.Domain.Global.Usuarios.Entities;
+﻿using ANSYS.Domain.Global.Usuarios.Entities;
 using ANSYS.Domain.Global.Usuarios.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -27,8 +26,8 @@ namespace ANSYS.Infrastructure.Global.Usuarios.Configurations
                 .HasDefaultValue(EPerfilUsuario.Cliente);
 
             builder.HasData(
-                new Usuario(1, "Master", "master@ansys.com", Domain.Global.Usuarios.Enums.EPerfilUsuario.Administrador),
-                new Usuario(2, "Administrador", "admin@ansys.com", Domain.Global.Usuarios.Enums.EPerfilUsuario.Administrador)
+                new Usuario(1, "Master", "master@ansys.com", EPerfilUsuario.Administrador),
+                new Usuario(2, "Administrador", "admin@ansys.com", EPerfilUsuario.Administrador)
             );
         }
     }

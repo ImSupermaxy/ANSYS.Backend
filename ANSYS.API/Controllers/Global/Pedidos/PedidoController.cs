@@ -27,7 +27,7 @@ namespace ANSYS.API.Controllers.Global.Pedidos
         [HttpGet]
         public async Task<IActionResult> GetAll(string? cliente = null, int? numeroPedido = null, EStatusPedido status = EStatusPedido.Todos)
         {
-            var result = await Sender.Send(new PedidoCommandGetAll(cliente!, numeroPedido, status/*, outroFiltro*/));
+            var result = await Sender.Send(new PedidoCommandGetAll(cliente!, numeroPedido, status));
 
             if (result == default)
                 return NotFound(result);
@@ -82,6 +82,11 @@ namespace ANSYS.API.Controllers.Global.Pedidos
             return Ok();
         }
 
+        /// <summary>
+        /// Cancela um pedido existente.
+        /// </summary>
+        /// <param name="command">O payload com o id do pedido a ser cancelado</param>
+        /// <returns>Retorna um sucesso ou falha do cancelamento</returns>
         [HttpDelete("cancelar")]
         public async Task<IActionResult> Cancelar(PedidoCommandCancelar command)
         {
@@ -92,6 +97,11 @@ namespace ANSYS.API.Controllers.Global.Pedidos
             return Ok();
         }
 
+        /// <summary>
+        /// Aprova um pedido existente.
+        /// </summary>
+        /// <param name="command">O payload com o id do pedido a ser aprovado</param>
+        /// <returns>Retorna um sucesso ou falha da aprovação</returns>
         [HttpPut("aprovar")]
         public async Task<IActionResult> Aprovar(PedidoCommandAprovar command)
         {

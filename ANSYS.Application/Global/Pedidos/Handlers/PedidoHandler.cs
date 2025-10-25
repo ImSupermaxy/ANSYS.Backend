@@ -1,6 +1,7 @@
 ﻿using ANSYS.Application.Global.PedidoItens.Commands;
 using ANSYS.Application.Global.Pedidos.Commands;
 using ANSYS.Application.Global.Pedidos.Mappers;
+using ANSYS.Application.Global.Usuarios.Commands;
 using ANSYS.Application.Utils.Constants;
 using ANSYS.Domain.Abstractions.Context.EntityFramework;
 using ANSYS.Domain.Global.Pedidos.Entities;
@@ -39,7 +40,26 @@ namespace ANSYS.Application.Global.Pedidos.Handlers
             {
                 var result = await _repository.GetAll(cancellationToken);
 
-                //fazer o filtro aqui?...
+                //Aplica filtro para o usuário...
+                if (!string.IsNullOrEmpty(request.cliente))
+                {
+                    var clientes = await _sender.Send(new UsuarioCommandGetAll());
+                    clientes = clientes.Where(c => c.Nome.ToLower().Contains(request.cliente.ToLower()));
+
+                    if (!clientes.Any())
+                        return [];
+
+                    result = result.Where(r => clientes.Any(c => c.Id == r.ClienteId));
+                }
+
+                //Aplica filtro do pedidoId....
+                if (request.numeroPedido.HasValue)
+                    result = result.Where(r => r.Id == request.numeroPedido.Value);
+
+                //Aplica filtro do status do pedido...
+                if (request.status != EStatusPedido.Todos)
+                    result = result.Where(r => r.Status == request.status);
+
                 return result;
             }
             catch (Exception ex)
@@ -124,6 +144,9 @@ namespace ANSYS.Application.Global.Pedidos.Handlers
                 if (entity == null)
                     return false;
 
+                if (entity.Status != EStatusPedido.PendentePagamento)
+                    return false;
+
                 entity.CancelaPedido(UsuariosDefaultSystem.UserAtualizacao);
 
                 var result = await _repository.Update(entity, cancellationToken);
@@ -144,6 +167,9 @@ namespace ANSYS.Application.Global.Pedidos.Handlers
             {
                 var entity = await _repository.GetById(request.Id, cancellationToken);
                 if (entity == null)
+                    return false;
+
+                if (entity.Status != EStatusPedido.PendentePagamento)
                     return false;
 
                 entity.AprovaPedido(UsuariosDefaultSystem.UserAtualizacao);

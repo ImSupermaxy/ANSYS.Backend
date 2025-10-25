@@ -22,17 +22,20 @@ namespace ANSYS.Infrastructure.Context.Local
             return Database.FirstOrDefault(e => e.Id!.Equals(id));
         }
 
-        public bool SetData(T entity)
+        public bool SetData(T entity, bool autoIncrement = true)
         {
-            AutoIncrementId(entity);
+            if (autoIncrement)
+                AutoIncrementId(entity);
+
             Database.Add(entity);
+            Database = Database.OrderBy(e => e.Id).ToList();
             return true;
         }
 
         public bool UpdateData(T entity)
         {
             this.RemoveData(entity.Id);
-            this.SetData(entity);
+            this.SetData(entity, false);
 
             return true;
         }
@@ -40,7 +43,7 @@ namespace ANSYS.Infrastructure.Context.Local
         public bool RemoveData(int id)
         {
             var dataEntity = GetById(id);
-            Database.ToList().Remove(dataEntity!);
+            Database.Remove(dataEntity!);
 
             return true;
         }
