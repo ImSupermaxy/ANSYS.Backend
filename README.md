@@ -148,8 +148,7 @@ Abaixo está a descrição dos principais endpoints da API:
          "subtotal": 10,
          "taxa": 5,
          "desconto": 1
-       },
-        //...
+       }
      ]
    }
   ```
@@ -194,7 +193,7 @@ Abaixo está a descrição dos principais endpoints da API:
   ```
 - **Resposta:**
   - **200 OK**
-  - **400 Bad Request** (se o pedido não for encontrado)
+  - **400 Bad Request** (se o pedido não for encontrado ou se caso o status do pedido não puder ser alterado)
  
 ### **6. DELETE /api/v1/cancelar**
 
@@ -207,4 +206,4 @@ Abaixo está a descrição dos principais endpoints da API:
   ```
 - **Resposta:**
   - **200 OK**
-  - **400 Bad Request** (se o pedido não for encontrado)
+  - **400 Bad Request** (se o pedido não for encontrado ou se caso o status do pedido não puder ser alterado)
