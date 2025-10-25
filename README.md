@@ -1,4 +1,4 @@
-# Projeto ANSYS (Asa Noturna System) - Backend (trabalho-api)
+# Projeto ANSYS (Asa Noturna System) - Backend
 
 ## Descrição
 
@@ -43,7 +43,7 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
    Edite o arquivo [appsettings.Development.json](ANSYS.API/appsettings.Development.json) na sessão "ConnectionStrings" com as configurações do seu banco de dados (Postgress).
 
    Edite também a sua escolha no arquivo [DependencyInjection.cs](ANSYS.Infrastructure/Dependency/DependencyInjection.cs) descomente o banco de dados a sua preferência dentro do método de "AddPersistence".
-   Caso queira utilize no lugar do banco com conexão do entity framework, utilize o banco de dados em tempo de execução, ainda no arquivo de [DependencyInjection.cs](ANSYS.Infrastructure/Dependency/DependencyInjection.cs), altere a linha 53 de "false" para "true".
+   Caso queira utilize no lugar do banco com conexão do entity framework, utilize o banco de dados em tempo de execução, ainda no arquivo de [DependencyInjection.cs](ANSYS.Infrastructure/Dependency/DependencyInjection.cs), altere a linha 49 de "false" para "true".
 
 5. **Compile e execute o projeto:**
 
@@ -57,12 +57,14 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
 
 5. **Instale as dependências do projeto**
 
-   - No terminal execute o comando `dotnet tool install --global dotnet-ef`
+   - No terminal execute os comandos: `dotnet new tool-manifest` e após `dotnet tool install dotnet-ef`
    - No terminal execute o comando `dotnet restore` para baixar as dependências de pacotes do projeto.
+   - Ainda No terminal execute o comando `dotnet ef` para visualizar se o command-line tools do entity framework foi baixado corretamente (caso sim irá aparecer um unicórinio no começo da mensagem).
    - Ainda no terminal execute o comando `dotnet ef database update --project ANSYS.Infrastructure --startup-project ANSYS.API` para atualizar o banco de dados vinculado ao EntityFramework
 
      **Observação**
-     Configure uma conexão existente com um banco de dados, o EntityFramework, configurará as tabelas necessárias após isso.
+     Configure uma conexão existente com um banco de dados, o EntityFramework, configurará as tabelas necessárias após isso. Ou utilize o banco de dados em tempo de execução.
+     Caso de um erro na execução do último comando, utilize o `dotnet build`, e visualize o erro, caso ele seja por conta da .dll do ANSYS.API estar utilizando para um outro processo, pare a execução do projeto e ou reinicie o visual studio / ide  
   
 
 ## Documentação da API (Swagger)
@@ -79,87 +81,129 @@ Abaixo está a descrição dos principais endpoints da API:
 
 ### **1. GET /api/v1/usuario**
 
-- **Descrição:** Retorna uma lista de usuários.
-- **Parâmetros de Consulta:**
-  - `page` (opcional): Número da página.
-  - `size` (opcional): Número de itens por página.
+- **Descrição:** Obtem todos os usuários cadastrados..
 - **Resposta:**
   - **200 OK**
     ```json
     [
-      {
-        "id": 1,
-        "nome": "João",
-        "email": "joao@exemplo.com"
-      },
-      // ...
+       {
+          "nome": "Master",
+          "email": "master@ansys.com",
+          "perfil": 1,
+          "id": 1
+       },
+       {
+          "nome": "Administrador",
+          "email": "admin@ansys.com",
+          "perfil": 1,
+          "id": 2
+       },
+       //...
     ]
     ```
 
 ### **2. POST /api/v1/usuario**
 
-- **Descrição:** Cria um novo usuário.
+- **Descrição:** Insere um novo usuário.
 - **Corpo da Requisição:**
   ```json
   {
-    "nome": "Maria",
+    "nome": "Lucas",
     "email": "maria@exemplo.com"
   }
   ```
 - **Resposta:**
   - **201 Created**
     ```json
-    {
-      "id": 2,
-      "nome": "Maria",
-      "email": "maria@exemplo.com"
-    }
+    3
     ```
 
 ### **3. GET /api/v1/usuario/{id}**
 
-- **Descrição:** Retorna um usuário específico pelo ID.
+- **Descrição:** Obtem um usuário cadastrado pelo seu identificador.
 - **Parâmetros de Caminho:**
-  - `id`: ID do usuário.
+  - `id`: Identificador do usuário.
 - **Resposta:**
   - **200 OK**
     ```json
     {
-      "id": 1,
-      "nome": "João",
-      "email": "joao@exemplo.com"
+       "nome": "Master",
+        "email": "master@ansys.com",
+        "perfil": 1,
+        "id": 1
     }
     ```
   - **404 Not Found** (se o usuário não for encontrado)
 
-### **4. PUT /api/v1/usuario/{id}**
+### **4. POST /api/v1/pedido**
 
-- **Descrição:** Atualiza um usuário existente.
+- **Descrição:** Insere um novo pedido.
 - **Corpo da Requisição:**
   ```json
   {
-    "nome": "João Atualizado",
-    "email": "joaoatualizado@exemplo.com"
-  }
+     "clienteId": 1,
+     "itens": [
+       {
+         "quantidade": 5,
+         "subtotal": 10,
+         "taxa": 5,
+         "desconto": 1
+       }
+     ]
+   }
   ```
+- **Resposta:**
+  - **201 Created**
+    ```json
+    1
+    ```
+
+### **5. GET /api/v1/pedido/{id}**
+
+- **Descrição:** Obtem um pedido cadastrado pelo seu identificador.
 - **Parâmetros de Caminho:**
-  - `id`: ID do usuário.
+  - `id`: Identificador do pedido.
 - **Resposta:**
   - **200 OK**
     ```json
     {
-      "id": 1,
-      "nome": "João Atualizado",
-      "email": "joaoatualizado@exemplo.com"
+       "clienteId": 1,
+        "subtotal": 50,
+        "taxa": 25,
+        "desconto": 5,
+        "total": 70,
+        "status": 2,
+        "dataInserido": "10:14:37.6682497",
+        "dataModificado": "10:14:37.6682497",
+        "cliente": null,
+        "itens": null,
+        "id": 1
     }
     ```
-  - **404 Not Found** (se o usuário não for encontrado)
+  - **404 Not Found** (se o pedido não for encontrado)
+ 
+### **6. PUT /api/v1/aprovar**
 
-### **5. DELETE /api/v1/usuario/{id}**
-
-- **Descrição:** Remove um usuário pelo ID.
-- **Parâmetros de Caminho:**
-  - `id`: ID do usuário.
+- **Descrição:** Aprova um pedido existente.
+- **Corpo da Requisição:**
+  ```json
+  {
+    "id": "1",
+  }
+  ```
 - **Resposta:**
-  - **204 No Content**
-  - **404 Not Found** (se o usuário não for encontrado)
+  - **200 OK**
+  - **400 Bad Request** (se o pedido não for encontrado ou se caso o status do pedido não puder ser alterado)
+ 
+### **6. DELETE /api/v1/cancelar**
+
+- **Descrição:** Cancela um pedido existente.
+- **Corpo da Requisição:**
+  ```json
+  {
+    "id": "1",
+  }
+  ```
+- **Resposta:**
+  - **200 OK**
+  - **400 Bad Request** (se o pedido não for encontrado ou se caso o status do pedido não puder ser alterado)
