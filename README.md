@@ -43,7 +43,7 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
    Edite o arquivo [appsettings.Development.json](ANSYS.API/appsettings.Development.json) na sessão "ConnectionStrings" com as configurações do seu banco de dados (Postgress).
 
    Edite também a sua escolha no arquivo [DependencyInjection.cs](ANSYS.Infrastructure/Dependency/DependencyInjection.cs) descomente o banco de dados a sua preferência dentro do método de "AddPersistence".
-   Caso queira utilize no lugar do banco com conexão do entity framework, utilize o banco de dados em tempo de execução, ainda no arquivo de [DependencyInjection.cs](ANSYS.Infrastructure/Dependency/DependencyInjection.cs), altere a linha 53 de "false" para "true".
+   Caso queira utilize no lugar do banco com conexão do entity framework, utilize o banco de dados em tempo de execução, ainda no arquivo de [DependencyInjection.cs](ANSYS.Infrastructure/Dependency/DependencyInjection.cs), altere a linha 49 de "false" para "true".
 
 5. **Compile e execute o projeto:**
 
