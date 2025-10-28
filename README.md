@@ -78,8 +78,6 @@ A documentação da API pode ser acessada por meio do Swagger. Após iniciar o b
 
 Abaixo está a descrição dos principais endpoints da API:
 
-{Alterar os endpoints conforme os endpoints do projeto}
-
 ### **1. GET /api/v1/usuario**
 
 - **Descrição:** Obtem todos os usuários cadastrados..
