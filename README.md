@@ -16,6 +16,7 @@ Este é o projeto do backend, com configurações das rotas (endpoints) e regras
 - Dapper 2.1.66 (em ANSYS.Infrastructure)
 - Microsoft.Extensions.Configuration.Abstractions 9.0.10 (em ANSYS.Infrastructure)
 - Npgsql.EntityFrameworkCore.PostgreSQL 9.0.4 (caso utilize Posgres, em ANSYS.Infrastructure)
+- Moq 4.20.72 (em CrudApplicationTests)
 
 ## Pré-requisitos
 
@@ -77,8 +78,6 @@ A documentação da API pode ser acessada por meio do Swagger. Após iniciar o b
 
 Abaixo está a descrição dos principais endpoints da API:
 
-{Alterar os endpoints conforme os endpoints do projeto}
-
 ### **1. GET /api/v1/usuario**
 
 - **Descrição:** Obtem todos os usuários cadastrados..
@@ -109,7 +108,7 @@ Abaixo está a descrição dos principais endpoints da API:
   ```json
   {
     "nome": "Lucas",
-    "email": "maria@exemplo.com"
+    "email": "Lucas@exemplo.com"
   }
   ```
 - **Resposta:**
@@ -117,6 +116,7 @@ Abaixo está a descrição dos principais endpoints da API:
     ```json
     3
     ```
+  - **400 Bad Request** (se der alguma exceção ou o email do usuário já estiver cadastrado)
 
 ### **3. GET /api/v1/usuario/{id}**
 
