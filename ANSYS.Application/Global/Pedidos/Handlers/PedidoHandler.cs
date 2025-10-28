@@ -1,9 +1,9 @@
 ﻿using ANSYS.Application.Global.PedidoItens.Commands;
 using ANSYS.Application.Global.Pedidos.Commands;
-using ANSYS.Application.Global.Pedidos.Mappers;
 using ANSYS.Application.Global.Usuarios.Commands;
 using ANSYS.Application.Utils.Constants;
 using ANSYS.Domain.Abstractions.Context.EntityFramework;
+using ANSYS.Domain.Abstractions.Mappers;
 using ANSYS.Domain.Global.Pedidos.Entities;
 using ANSYS.Domain.Global.Pedidos.Enums;
 using ANSYS.Domain.Global.Pedidos.Repositories;
@@ -20,12 +20,12 @@ namespace ANSYS.Application.Global.Pedidos.Handlers
     {
         private readonly IEntityFrameworkDBContext _dbcotext;
         private readonly IPedidoRepository _repository;
-        private readonly PedidoMapper _mapper;
+        private readonly IEntityMapper<Pedido, PedidoCommandInsert, PedidoCommandUpdate> _mapper;
         private readonly ISender _sender;
 
         public PedidoHandler(IEntityFrameworkDBContext dbcotext, 
             IPedidoRepository repository,
-            PedidoMapper mapper,
+            IEntityMapper<Pedido, PedidoCommandInsert, PedidoCommandUpdate> mapper,
             ISender sender)
         {
             _dbcotext = dbcotext;

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace ANSYS.Application.Global.Usuarios.Commands
 {
-    public sealed class UsuarioCommandUpdate : UsuarioGeneral, ICommand, IRequest<bool>
+    public sealed class UsuarioCommandUpdate : UsuarioGeneral, ICommand, IRequest<bool?>
     {
         public int Id { get; set; }
     }

@@ -73,8 +73,11 @@ namespace ANSYS.API.Controllers.Global.Usuarios
         public async Task<IActionResult> Put(UsuarioCommandUpdate command)
         {
             var result = await Sender.Send(command);
-            if (!result)
+            if (result == null)
                 return BadRequest();
+
+            if (!result.Value)
+                return NotFound();
 
             return Ok();
         }

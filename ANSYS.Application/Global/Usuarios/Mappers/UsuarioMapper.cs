@@ -1,7 +1,6 @@
 ﻿using ANSYS.Application.Global.Usuarios.Commands;
 using ANSYS.Domain.Abstractions.Mappers;
 using ANSYS.Domain.Global.Usuarios.Entities;
-using ANSYS.Domain.Global.Usuarios.Enums;
 
 namespace ANSYS.Application.Global.Usuarios.Mappers
 {
@@ -16,11 +15,6 @@ namespace ANSYS.Application.Global.Usuarios.Mappers
         {
             entity.Update(command.Nome, command.Email);
             return entity;
-        }
-
-        public Usuario ToEntity(UsuarioCommandInsertFuncionario command)
-        {
-            return new Usuario(command.Nome, command.Email, EPerfilUsuario.Funcionario);
         }
     }
 }

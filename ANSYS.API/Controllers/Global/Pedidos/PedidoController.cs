@@ -66,21 +66,21 @@ namespace ANSYS.API.Controllers.Global.Pedidos
             return Ok(result);
         }
 
-        /// <summary>
-        /// Atualiza um pedido existente
-        /// </summary>
-        /// <param name="command">O payload com as informações do pedido</param>
-        /// <returns>Retorna um sucesso ou falha na atualização</returns>
-        [HttpPut]
-        [Authorize] //Rota inacessível por qualquer funcionário, apenas para administradores e master (perfil)
-        public async Task<IActionResult> Put(PedidoCommandUpdate command)
-        {
-            var result = await Sender.Send(command);
-            if (!result)
-                return BadRequest();
+        ///// <summary>
+        ///// Atualiza um pedido existente
+        ///// </summary>
+        ///// <param name="command">O payload com as informações do pedido</param>
+        ///// <returns>Retorna um sucesso ou falha na atualização</returns>
+        //[HttpPut]
+        //[Authorize] //Rota inacessível por qualquer funcionário, apenas para administradores e master (perfil)
+        //public async Task<IActionResult> Put(PedidoCommandUpdate command)
+        //{
+        //    var result = await Sender.Send(command);
+        //    if (!result)
+        //        return BadRequest();
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
         /// <summary>
         /// Cancela um pedido existente.
